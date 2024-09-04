@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="BorrowRecord" />
+        <module name="APIGateway" />
         <module name="EurekaServerr" />
         <module name="BookCatalog" />
       </profile>
@@ -15,6 +16,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="APIGateway" options="-parameters" />
       <module name="BookCatalog" options="-parameters" />
       <module name="BorrowRecord" options="-parameters" />
       <module name="EurekaServerr" options="-parameters" />
