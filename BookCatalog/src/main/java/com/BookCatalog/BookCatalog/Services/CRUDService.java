@@ -12,11 +12,10 @@ import java.util.Optional;
 
 @Component
 public class CRUDService {
+    // import the repository as a dependency
     @Autowired
     BookCatalogRepo bookCatalogRepository;
 
-    @Autowired
-    BorrowRecordClient borrowRecordClient;
 
     // create new book
     public BookCatalog addBook(BookCatalog bookCatalog) {

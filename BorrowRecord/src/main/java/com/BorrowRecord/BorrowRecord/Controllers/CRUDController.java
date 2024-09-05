@@ -14,11 +14,10 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/api/borrowrecord/")
 public class CRUDController {
+    // inject the service as a dependency
     @Autowired
     CRUDService crudService;
 
-    @Autowired
-    BorrowRecordRepo borrowRepository;
 
     // create borrow record
     @PostMapping("/create")

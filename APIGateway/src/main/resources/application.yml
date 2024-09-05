@@ -1,0 +1,18 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: APIGateway
+  cloud:
+    gateway:
+      routes:
+        - id: book_catalog_route
+          uri: http://localhost:8989
+          predicates:
+            - Path=/api/books/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8762/eureka/
+server:
+  port: 8099

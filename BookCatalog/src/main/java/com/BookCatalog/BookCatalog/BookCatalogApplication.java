@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
+//  register the application to the discovery server and enable RESTClient for microservice communication
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients

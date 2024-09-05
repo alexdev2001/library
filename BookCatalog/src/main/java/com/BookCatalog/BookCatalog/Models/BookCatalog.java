@@ -16,6 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookCatalog {
+    // model attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookID;

@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 public class BorrowRecord {
+    // borrow record entity attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long borrowID;

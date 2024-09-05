@@ -17,6 +17,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/api/books/")
 public class CRUDController {
+    // inject service class and REST Client dependencies
     @Autowired
     CRUDService crudService;
 
@@ -25,7 +26,7 @@ public class CRUDController {
 
     private static final Logger logger = LoggerFactory.getLogger(CRUDController.class);
 
-
+    // set the RESTClient tp the class constructor
     public CRUDController(BorrowRecordClient borrowRecordClient) {
         this.borrowRecordClient = borrowRecordClient;
     }
