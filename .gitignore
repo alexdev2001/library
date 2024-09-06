@@ -1,0 +1,2 @@
+#ignore the usermanagement application.properites
+/UserManagement/src/main/resources/application.properties

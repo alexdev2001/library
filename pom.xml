@@ -26,6 +26,7 @@
 		<module>BorrowRecord</module>
 		<module>EurekaServer</module>
 		<module>APIGateway</module>
+		<module>UserManagement</module>
 	</modules>
 	<scm>
 		<connection/>
