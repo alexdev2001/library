@@ -3,6 +3,9 @@ package com.UserManagement.UserManagement.Services;
 import com.UserManagement.UserManagement.Models.Users;
 import com.UserManagement.UserManagement.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +18,15 @@ public class CRUDService {
 
     @Autowired
     PasswordEncoder encoder;
+
+    public CRUDService(@Lazy  PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     // create user
     public Users createUser(Users user) {

@@ -3,8 +3,9 @@ package com.UserManagement.UserManagement.Controllers;
 import com.UserManagement.UserManagement.Models.Users;
 import com.UserManagement.UserManagement.Repositories.UserRepository;
 import com.UserManagement.UserManagement.Services.CRUDService;
-import org.apache.catalina.User;
+import jakarta.ws.rs.ext.ParamConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,17 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/usermanagement/")
-public class CRUDContoller {
+public class CRUDController {
 
     @Autowired
     CRUDService crudService;
 
     @Autowired
     UserRepository userRepo;
+
+    public CRUDController(@Lazy CRUDService crudService) {
+        this.crudService = crudService;
+    }
 
     // create
     @PostMapping("/add")
