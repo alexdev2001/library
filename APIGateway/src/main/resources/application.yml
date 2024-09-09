@@ -10,6 +10,10 @@ spring:
           uri: http://localhost:8989
           predicates:
             - Path=/api/books/**
+        - id: usermanagement_route
+          uri: http://localhost:8181
+          predicates:
+            - Path=/api/usermanagement/**
 eureka:
   client:
     service-url:
