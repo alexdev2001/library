@@ -10,10 +10,15 @@ spring:
           uri: http://localhost:8989
           predicates:
             - Path=/api/books/**
-        - id: usermanagement_route
+        - id: user_management_route
           uri: http://localhost:8181
           predicates:
             - Path=/api/usermanagement/**
+        - id: borrow_record_route
+          uri: http://localhost:8787
+          predicates:
+            - Path=/api/borrowrecord/**
+
 eureka:
   client:
     service-url:
