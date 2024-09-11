@@ -16,17 +16,9 @@ public class CRUDService {
     @Autowired
     UserRepository userRepo;
 
+    @Lazy
     @Autowired
     PasswordEncoder encoder;
-
-    public CRUDService(@Lazy  PasswordEncoder encoder) {
-        this.encoder = encoder;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     // create user
     public Users createUser(Users user) {

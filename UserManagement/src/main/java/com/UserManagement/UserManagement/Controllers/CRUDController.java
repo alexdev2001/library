@@ -22,9 +22,6 @@ public class CRUDController {
     @Autowired
     UserRepository userRepo;
 
-    public CRUDController(@Lazy CRUDService crudService) {
-        this.crudService = crudService;
-    }
 
     // create
     @PostMapping("/add")

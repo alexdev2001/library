@@ -10,14 +10,20 @@ spring:
           uri: http://localhost:8989
           predicates:
             - Path=/api/books/**
+          filters:
+            - AddRequestHeader=X-Forwarded-By, Gateway
         - id: user_management_route
           uri: http://localhost:8181
           predicates:
             - Path=/api/usermanagement/**
+          filters:
+            - AddRequestHeader=X-Forwarded-By, Gateway
         - id: borrow_record_route
           uri: http://localhost:8787
           predicates:
             - Path=/api/borrowrecord/**
+          filters:
+            - AddRequestHeader=X-Forwarded-By, Gateway
 
 eureka:
   client:
