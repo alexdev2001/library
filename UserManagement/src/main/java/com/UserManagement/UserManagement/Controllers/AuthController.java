@@ -46,32 +46,33 @@ public class AuthController {
 
     @PostMapping(value = "/signin", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        String username;
-        String password;
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
 
-        username = loginRequest.getUsername();
-        password = loginRequest.getPassword();
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
 
-        System.out.println(username);
-        System.out.println(password);
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password)
+            );
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
-        );
+            System.out.println("Authentication successful for: " + username);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetailsImplement userDetails = (UserDetailsImplement) authentication.getPrincipal();
+            UserDetailsImplement userDetails = (UserDetailsImplement) authentication.getPrincipal();
+            String jwtToken = jwtUtil.generateJwtToken(authentication);
 
-        String jwtToken = jwtUtil.generateJwtToken(authentication);
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("token", jwtToken);
 
-        // create a response body
-        Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("token", jwtToken);
-
-        return ResponseEntity.ok(responseBody);
-
-
+            return ResponseEntity.ok(responseBody);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
+
 
 }
