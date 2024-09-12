@@ -1,2 +1,4 @@
 #ignore the usermanagement application.properites
 /UserManagement/src/main/resources/application.properties
+#ignore the API gateway yml file
+/APIGateway/src/main/resources/application.yml
