@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/api/books/")
 public class CRUDController {
     // inject service class and REST Client dependencies
@@ -29,6 +29,11 @@ public class CRUDController {
     // set the RESTClient tp the class constructor
     public CRUDController(BorrowRecordClient borrowRecordClient) {
         this.borrowRecordClient = borrowRecordClient;
+    }
+
+    @GetMapping("test")
+    public String test() {
+        return "test";
     }
 
     //create book

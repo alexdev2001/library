@@ -15,15 +15,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -44,13 +44,10 @@ public class AuthController {
     JwtUtility jwtUtil;
 
 
-    @PostMapping(value = "/signin", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    @PostMapping(value = "/signin", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public ResponseEntity<?> authenticateUser(@RequestBody @ModelAttribute("users") LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
-
-        System.out.println("Username: " + username);
-        System.out.println("Password: " + password);
 
         try {
             Authentication authentication = authenticationManager.authenticate(
@@ -59,13 +56,33 @@ public class AuthController {
 
             System.out.println("Authentication successful for: " + username);
 
+            // update the security context
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
+            // map the principal from the authentication object to the
             UserDetailsImplement userDetails = (UserDetailsImplement) authentication.getPrincipal();
+            // create a token which is created by passing the authentication object as a parameter
+            // in the token generation function
             String jwtToken = jwtUtil.generateJwtToken(authentication);
+
+            // inject roles to a list
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(item -> item.getAuthority())
+                    .collect(Collectors.toList());
+
+            // define the url, you can define the default url for other users for instance admin
+            String defaultUrl = "/dashboard";
+            for (GrantedAuthority authority : userDetails.getAuthorities()) {
+                if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                    defaultUrl = "/admindash"; // this can be changed if the need arises
+                    break;
+                }
+            }
 
             Map<String, Object> responseBody = new HashMap<>();
             responseBody.put("token", jwtToken);
+            // the url to be redirect to on the front end, should correlate to the endpoint on the client
+            responseBody.put("redirectUrl", defaultUrl);
 
             return ResponseEntity.ok(responseBody);
         } catch (Exception e) {
