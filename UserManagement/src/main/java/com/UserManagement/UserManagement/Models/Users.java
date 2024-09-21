@@ -18,6 +18,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userID;
+    private String email;
     private String username;
     private String password;
     @ManyToMany

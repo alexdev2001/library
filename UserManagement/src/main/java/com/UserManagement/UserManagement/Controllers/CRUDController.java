@@ -6,13 +6,14 @@ import com.UserManagement.UserManagement.Services.CRUDService;
 import jakarta.ws.rs.ext.ParamConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/api/usermanagement/")
 public class CRUDController {
 
@@ -22,10 +23,9 @@ public class CRUDController {
     @Autowired
     UserRepository userRepo;
 
-
     // create
-    @PostMapping("/add")
-    public ResponseEntity<Users> createUser(@RequestBody Users user) {
+    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<Users> createUser(@RequestBody @ModelAttribute("user") Users user) {
         crudService.createUser(user);
         return ResponseEntity.ok(user);
     }
@@ -37,8 +37,6 @@ public class CRUDController {
         return user.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.noContent().build());
     }
-
-
 
     // update
     @PutMapping("/update/{userId}")
